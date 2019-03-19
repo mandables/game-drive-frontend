@@ -1,25 +1,29 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import Sidebar from './Display Components/Sidebar'
+import GamesContainer from './Controller_Components/GamesContainer'
 import './App.css';
 
+const URL = 'http://localhost:3001/api/v1/games'
+
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      games: [],
+    }
+
+  }
+
+  componentDidMount() {
+    fetch(URL).then(resp => resp.json())
+      .then(array => this.setState({ games: array }))
+  }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Sidebar />
+        <GamesContainer />
       </div>
     );
   }
