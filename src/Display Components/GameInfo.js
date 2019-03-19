@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './GameCard.css';
+import './GameInfo.css';
 
-class GameCard extends Component {
+class GameInfo extends Component {
     render() {
         return (
             <div>
@@ -14,4 +14,4 @@ class GameCard extends Component {
     }
 }
 
-export default GameCard;
+export default GameInfo;

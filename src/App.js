@@ -4,34 +4,67 @@ import Sidebar from './Display Components/Sidebar'
 import GamesContainer from './Controller_Components/GamesContainer'
 import './App.css';
 import Login from './Display Components/Login'
+import GameCard from './Display Components/GameCard'
+import GameInfo from './Display Components/GameInfo'
 
-const URL = 'http://localhost:3001/api/v1/games'
+const URL = 'http://localhost:3000/api/v1/games'
+const user = 'http://localhost:3000/api/v1/users/1'
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
       games: [],
-      user: null
+      game: '',
+      user: null,
+      view: 'all'
     }
 
   }
+
+  //User and game added for development
   componentDidMount() {
     fetch(URL).then(resp => resp.json())
-      .then(array => this.setState({ games: array }))
-
+      .then(array => this.setState({ games: array, game: array[0] }))
+      .then(fetch(user).then(resp => resp.json().then(user => this.setState({ user: user }))))
   }
 
-  handleLogin = e => {
-    debugger
+  // condiitonal component rendering
+  showComponent = () => {
+    if (this.state.view === "all") {
+      return <GamesContainer games={this.allGameCards()} />
+    }
+    else if (this.state.view === 'game') {
+      return <GameInfo />
+    } else {
+      return <Login />
+    }
+  }
+
+  //Selecting a game 
+  showGame = e => {
     console.log(e)
   }
+
+
+
+
+  login = user => {
+    this.setState({
+      user: user,
+      view: 'all'
+    })
+  }
+
+  allGameCards = () => {
+    return this.state.games.map(game => <GameCard onClick={this.showGame} game={game} key={game.id} />)
+  }
+
   render() {
     return (
       <div className="App">
         <Sidebar />
-        {this.state.user ? <GamesContainer /> : <Login handleLogin={this.handleLogin} />}
-
+        {this.showComponent()}
       </div>
 
     );

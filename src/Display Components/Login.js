@@ -20,7 +20,9 @@ class Login extends Component {
 
     handleLogin = () => {
         if (this.state.usernameInput === 'Mani' && this.state.passwordInput === 'admin') {
-            fetch()
+            fetch('http://localhost:3000/api/v1/users/1')
+                .then(resp => resp.json())
+                .then(user => this.props.login(user))
         }
     }
 
@@ -32,9 +34,9 @@ class Login extends Component {
                     <input onChange={this.handleInput} type="text" name="usernameInput" />
                     <br></br>
                     <label for="Password">Password   </label>
-                    <input onChange={this.handleInput} type="text" name="passwordInput" />
+                    <input onChange={this.handleInput} type="password" name="passwordInput" />
                     <br />
-                    <button onClick={this.props.handleLogin}>Login</button>
+                    <button onClick={this.handleLogin}>Login</button>
                 </div>
             </div >
 
