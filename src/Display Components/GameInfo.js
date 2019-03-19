@@ -4,11 +4,11 @@ import './GameInfo.css';
 class GameInfo extends Component {
     render() {
         return (
-            <div>
+            <div className="main-info">
                 <img src={this.props.game.image} />
-                <div>
-                    {this.props.game.title}
-                </div>
+                <br />
+                {this.props.game.title}
+
             </div>
         );
     }

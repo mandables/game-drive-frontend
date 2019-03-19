@@ -1,0 +1,10 @@
+.main-info > img {
+    width: auto;
+    height: 400px;
+}
+
+.main-info {
+    position: relative;
+    top: 100px;
+    left: 150px;
+}

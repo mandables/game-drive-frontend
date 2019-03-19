@@ -35,15 +35,18 @@ class App extends Component {
       return <GamesContainer games={this.allGameCards()} />
     }
     else if (this.state.view === 'game') {
-      return <GameInfo />
+      return <GameInfo game={this.state.game} />
     } else {
       return <Login />
     }
   }
 
   //Selecting a game 
-  showGame = e => {
-    console.log(e)
+  showGame = game => {
+    this.setState({
+      game: game,
+      view: 'game'
+    })
   }
 
 
@@ -57,7 +60,7 @@ class App extends Component {
   }
 
   allGameCards = () => {
-    return this.state.games.map(game => <GameCard onClick={this.showGame} game={game} key={game.id} />)
+    return this.state.games.map(game => <GameCard showGame={this.showGame} game={game} key={game.id} />)
   }
 
   render() {
