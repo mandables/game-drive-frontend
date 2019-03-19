@@ -1,7 +1,7 @@
 .user-page {
     margin-left: 330px;
-    display: grid;
-    grid-template-columns: 150px 150px 150px 150px 150px 150px;
+    display: flex;
+    /* grid-template-columns: 150px 150px 150px 150px 150px 150px; */
     overflow: auto;
     white-space: nowrap;
  
