@@ -5,7 +5,7 @@ class UserGameCollection extends Component {
     render() {
         return (
             <div className='collection-main'>
-                <img src={this.props.game.image} onClick={() => this.props.showGame(this.props.game)} alt="" />
+                <img src={this.props.game.image} />
                 <div>
 
                 </div>

@@ -20,11 +20,15 @@ class UserPage extends Component {
     render() {
 
         return (
-            <div className="mainpage">
+            <div>
                 <h1>{this.props.user.username}</h1>
                 <hr className="main-line" />
-                {this.userGames()}
-            </div >
+                <div className="user-page">
+
+                    {this.userGames()}
+                </div >
+            </div>
+
         );
     }
 }
