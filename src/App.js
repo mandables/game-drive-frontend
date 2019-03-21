@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, withRouter, redirect } from 'react-router-dom'
 import Sidebar from './Display Components/Sidebar'
 import GamesContainer from './Controller_Components/GamesContainer'
 import './App.css';
 import Login from './Display Components/Login'
 import GameCard from './Display Components/GameCard'
 import GameInfo from './Display Components/GameInfo'
+import UserPage from './Controller_Components/UserPage'
 
-const URL = 'http://localhost:3000/api/v1/games'
-const user = 'http://localhost:3000/api/v1/users/1'
+
+const URL = 'http://localhost:3001/api/v1/games'
+const user = 'http://localhost:3001/api/v1/users/1'
 
 class App extends Component {
   constructor() {
@@ -19,7 +21,6 @@ class App extends Component {
       user: null,
       view: 'all'
     }
-
   }
 
   //User and game added for development
@@ -33,10 +34,11 @@ class App extends Component {
   showComponent = () => {
     if (this.state.view === "all") {
       return <GamesContainer games={this.allGameCards()} />
-    }
-    else if (this.state.view === 'game') {
-      return <GameInfo game={this.state.game} />
-    } else {
+    } else if (this.state.view === 'game') {
+      return <GameInfo game={this.state.game} user={this.state.user} />
+    } else if (this.state.view === "user")
+      return <UserPage user={this.state.user} />
+    else {
       return <Login />
     }
   }
@@ -49,29 +51,40 @@ class App extends Component {
     })
   }
 
+  //Show all games 
+  showAllGames = () => {
+    this.setState({ view: 'all' })
+  }
+
+  //Show user page
+  showUser = () => {
+    this.setState({ view: 'user' })
+  }
 
 
-
+  //Logging in 
   login = user => {
     this.setState({
       user: user,
-      view: 'all'
+      view: 'user'
     })
   }
-
+  //Render all games
   allGameCards = () => {
     return this.state.games.map(game => <GameCard showGame={this.showGame} game={game} key={game.id} />)
   }
 
   render() {
     return (
-      <div className="App">
+      <div>
         <Sidebar />
         {this.showComponent()}
+
       </div>
+
 
     );
   }
 }
 
-export default App;
+export default withRouter(App);

@@ -13,7 +13,7 @@ class GamesContainer extends Component {
             <div className="mainpage">
                 <h1>All Games</h1>
                 <hr className="main-line" />
-                {this.props.games} />
+                {this.props.games}
             </div >
         );
     }
