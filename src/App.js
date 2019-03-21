@@ -10,8 +10,7 @@ import GameInfo from './Display Components/GameInfo'
 import UserPage from './Controller_Components/UserPage'
 
 
-const URL = 'http://localhost:3001/api/v1/games'
-const user = 'http://localhost:3001/api/v1/users/1'
+
 
 class App extends Component {
   constructor() {
@@ -24,16 +23,6 @@ class App extends Component {
     }
   }
 
-  //Fetch games 
-  fetchGames = () => {
-    return fetch(URL).then(resp => resp.json())
-      .then(array => this.setState({ games: array }))
-  }
-  //User added for development
-  componentDidMount() {
-    this.fetchGames()
-      .then(fetch(user).then(resp => resp.json().then(user => this.setState({ user: user }))))
-  }
 
   // conditional component rendering
   showComponent = () => {
@@ -74,17 +63,14 @@ class App extends Component {
       view: 'user'
     })
   }
-  //Render all games
-  allGameCards = () => {
-    return this.state.games.map(game => <GameCard showGame={this.showGame} game={game} key={game.id} />)
-  }
+
 
   render() {
     return (
       <div>
         <Sidebar />
         <Content />
-        {this.showComponent()}
+        {/* {this.showComponent()} */}
 
       </div>
 
