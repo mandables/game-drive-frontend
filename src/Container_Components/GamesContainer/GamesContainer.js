@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './GamesContainer.css'
-import '../Display Components/GameCard'
-import GameCard from '../Display Components/GameCard';
+import GameCard from '../../Display_Components/GameCard/GameCard'
 
 
 class GamesContainer extends Component {

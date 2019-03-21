@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, withRouter, redirect } from 'react-router-dom'
+import Content from './Container_Components/Content/Content'
 import Sidebar from './Display Components/Sidebar'
 import GamesContainer from './Controller_Components/GamesContainer'
 import './App.css';
@@ -23,14 +24,18 @@ class App extends Component {
     }
   }
 
-  //User and game added for development
+  //Fetch games 
+  fetchGames = () => {
+    return fetch(URL).then(resp => resp.json())
+      .then(array => this.setState({ games: array }))
+  }
+  //User added for development
   componentDidMount() {
-    fetch(URL).then(resp => resp.json())
-      .then(array => this.setState({ games: array, game: array[0] }))
+    this.fetchGames()
       .then(fetch(user).then(resp => resp.json().then(user => this.setState({ user: user }))))
   }
 
-  // condiitonal component rendering
+  // conditional component rendering
   showComponent = () => {
     if (this.state.view === "all") {
       return <GamesContainer games={this.allGameCards()} />
@@ -78,6 +83,7 @@ class App extends Component {
     return (
       <div>
         <Sidebar />
+        <Content />
         {this.showComponent()}
 
       </div>
