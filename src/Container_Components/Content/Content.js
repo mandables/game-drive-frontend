@@ -20,7 +20,7 @@ class Content extends Component {
                     render={routerProps => <GamesContainer {...routerProps} />} />
                 <Route
                     path="/"
-                    component={Welcome} />
+                    render={() => <Welcome user={this.state.user} />} />
             </React.Fragment>
         );
     }
