@@ -2,8 +2,28 @@ import React, { Component } from 'react';
 import './GameInfo.css';
 
 const URL = 'http://localhost:3000/api/v1/user_games'
+const gameUrl = 'http://localhost:3000/api/v1/games'
 
 class GameInfo extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            game: '',
+        }
+    }
+
+    //fetch game 
+    gameId = parseInt(this.props.match.params.gameId)
+    game = () => {
+
+        return fetch(`${gameUrl}/${this.gameId}`)
+            .then(resp => resp.json())
+            .then(game => this.setState({ game: game }))
+    }
+
+    componentDidMount() {
+        this.game()
+    }
 
     handleClick = (user, game, e) => {
         fetch(URL, {
@@ -13,21 +33,19 @@ class GameInfo extends Component {
         })
     }
 
-    findGame = () => {
-        return this.props.games.find(game => game.id == this.props.match.params.gameId)
-    }
+
     render() {
         return (
             <div className="main-info">
-                {this.props.match.params.gameId}
-                <img src={this.findGame().image} alt='' />
+
+                <img src={this.state.game.image} alt='' />
                 <br />
-                {/* {this.props.game.title}
+                {this.state.game.title}
                 <br />
                 <label >Played?</label>
                 <input onChange={e => this.handleClick(this.props.user, this.props.game, e)} type="checkbox" name="played" />
                 <label>Completed?</label>
-                <input type="checkbox" name="completed" /> */}
+                <input type="checkbox" name="completed" />
 
             </div>
         );

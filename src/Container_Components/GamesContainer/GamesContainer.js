@@ -4,7 +4,7 @@ import './GamesContainer.css'
 import GameList from '../../Display_Components/GameList/GameList'
 import GameInfo from '../../Display_Components/GameInfo/GameInfo'
 
-const URL = 'http://localhost:3001/api/v1/games'
+const URL = 'http://localhost:3000/api/v1/games'
 
 class GamesContainer extends Component {
     constructor(props) {
@@ -35,7 +35,7 @@ class GamesContainer extends Component {
                 <Route
                     path={`${this.props.match.url}/:gameId`}
                     render={routerProps => {
-                        return <GameInfo {...routerProps} games={this.state.games} />
+                        return <GameInfo {...routerProps} />
                     }} />
             </React.Fragment>
 

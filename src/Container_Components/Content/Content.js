@@ -2,24 +2,26 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, withRouter, redirect } from 'react-router-dom'
 import './Content.css';
 import GamesContainer from '../GamesContainer/GamesContainer'
-import Login from '../../Display_Components/Login'
+import Login from '../../Display_Components/Login/Login'
+import Welcome from '../../Container_Components/Welcome/Welcome'
 
 class Content extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            view: ''
+            user: '',
         }
     }
     render() {
         return (
-            <Route
-                path="/games"
-                render={routerProps => <GamesContainer {...routerProps} />} />
-
-
-
-
+            <React.Fragment>
+                <Route
+                    path="/games"
+                    render={routerProps => <GamesContainer {...routerProps} />} />
+                <Route
+                    path="/"
+                    component={Welcome} />
+            </React.Fragment>
         );
     }
 }
