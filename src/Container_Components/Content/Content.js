@@ -4,6 +4,7 @@ import './Content.css';
 import GamesContainer from '../GamesContainer/GamesContainer'
 import Login from '../../Display_Components/Login/Login'
 import Welcome from '../../Container_Components/Welcome/Welcome'
+import API from '../../API'
 
 class Content extends Component {
     constructor(props) {
@@ -11,6 +12,16 @@ class Content extends Component {
         this.state = {
             user: '',
         }
+    }
+
+    siginin = user => {
+        localStorage.setItem('token', user.token)
+        this.setState({ user: user })
+    }
+
+    signout = () => {
+        localStorage.removeItem('token')
+        this.setState({ user: '' })
     }
     render() {
         return (
