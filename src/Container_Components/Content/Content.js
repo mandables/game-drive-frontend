@@ -5,7 +5,7 @@ import GamesContainer from '../GamesContainer/GamesContainer'
 import Login from '../../Display_Components/Login/Login'
 import Welcome from '../../Container_Components/Welcome/Welcome'
 import API from '../../API'
-import Sidebar from '../../Display_Components/Sidebar'
+import Sidebar from '../../Display_Components/Sidebar/Sidebar'
 
 class Content extends Component {
     constructor(props) {
@@ -16,15 +16,15 @@ class Content extends Component {
     }
 
     //
- 
+
 
     render() {
         return (
             <React.Fragment>
-                <Sidebar />
+                <Sidebar signout={this.props.signout} />
                 <Route
                     path="/games"
-                    render={routerProps => <GamesContainer {...routerProps} />} />
+                    render={routerProps => <GamesContainer user={this.props.user} {...routerProps} />} />
                 {/* <Route
                     path="/"
                     render={routerProps => <Welcome {...routerProps} user={this.state.user} signin={this.props.signin} />} /> */}

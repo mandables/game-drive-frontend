@@ -1,5 +1,5 @@
-const signinURL = 'http://localhost:3000/signin'
-const validateURL = 'http://localhost:3000/validate'
+const signinURL = 'http://localhost:3001/signin'
+const validateURL = 'http://localhost:3001/validate'
 
 class API {
     static signin(user) {
@@ -14,6 +14,10 @@ class API {
         return this.get(validateURL)
     }
 
+    static getGames() {
+        return this.get("http://localhost:3001/games");
+    }
+
     static get(url) {
         return fetch(url, {
             headers: {
@@ -24,3 +28,9 @@ class API {
 }
 
 export default API
+
+// fetch("http://localhost:3000/games", {
+//     headers: {
+//         Authorization: localStorage.getItem("token")
+//     }
+// }).then(resp => resp.json())
