@@ -22,3 +22,5 @@ class API {
         }).then(resp => resp.json())
     }
 }
+
+export default API
