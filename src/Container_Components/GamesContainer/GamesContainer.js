@@ -4,7 +4,7 @@ import './GamesContainer.css'
 import GameList from '../../Display_Components/GameList/GameList'
 import GameInfo from '../../Display_Components/GameInfo/GameInfo'
 
-const URL = 'http://localhost:3000/api/v1/games'
+const URL = 'http://localhost:3001/api/v1/games'
 
 class GamesContainer extends Component {
     constructor(props) {
@@ -28,16 +28,16 @@ class GamesContainer extends Component {
     render() {
 
         return (
-            <React.Fragment>
+            <div className="game-display">
                 <Route
                     exact path="/games"
                     render={routerProps => <GameList {...routerProps} games={this.state.games} />} />
                 <Route
                     path={`${this.props.match.url}/:gameId`}
                     render={routerProps => {
-                        return <GameInfo {...routerProps} />
+                        return <GameInfo user={this.props.user} {...routerProps} />
                     }} />
-            </React.Fragment>
+            </div>
 
         );
     }

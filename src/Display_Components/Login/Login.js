@@ -34,17 +34,22 @@ class Login extends Component {
 
     render() {
         return (
-            <div className='login-main'>
-                <div>
-                    <label for="Username">Username</label>
-                    <input onChange={this.handleInput} type="text" name="username" />
-                    <br></br>
-                    <label for="Password">Password   </label>
-                    <input onChange={this.handleInput} type="password" name="password" />
-                    <br />
-                    <button onClick={this.handleLogin}>Login</button>
-                </div>
-            </div >
+            <div>
+                <h1>Welcome to GameDrive</h1>
+                <div className='login-main'>
+                    <div>
+                        <label for="Username">Username</label>
+                        <input onChange={this.handleInput} type="text" name="username" />
+                        <br></br>
+                        <label for="Password">Password   </label>
+                        <input onChange={this.handleInput} type="password" name="password" />
+                        <br />
+                        <button onClick={this.handleLogin}>Login</button>
+                    </div>
+                </div >
+
+            </div>
+
 
         );
     }
