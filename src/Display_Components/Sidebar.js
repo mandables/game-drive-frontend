@@ -14,6 +14,7 @@ class Sidebar extends Component {
                 <br />
                 <hr />
                 <b onClick={this.props.showUser} className="my-games">MY GAMES</b>
+                <h3 onClick={this.props.signout}>Signout</h3>
             </div>
         )
     }

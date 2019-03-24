@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Login.css';
+import API from '../../API'
 
 
 
@@ -7,8 +8,8 @@ class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            usernameInput: '',
-            passwordInput: '',
+            username: '',
+            password: '',
         }
     }
 
@@ -19,11 +20,16 @@ class Login extends Component {
     }
 
     handleLogin = () => {
-        if (this.state.usernameInput === 'Mani' && this.state.passwordInput === 'admin') {
-            fetch('http://localhost:3000/api/v1/users/1')
-                .then(resp => resp.json())
-                .then(user => this.props.login(user))
-        }
+
+        const user = this.state
+        API.signin(user).then(data => {
+            if (data.error) {
+                alert("Incorrect username and/or password")
+            } else {
+                this.props.signin(data)
+                this.props.history.push('/games')
+            }
+        })
     }
 
     render() {
@@ -31,10 +37,10 @@ class Login extends Component {
             <div className='login-main'>
                 <div>
                     <label for="Username">Username</label>
-                    <input onChange={this.handleInput} type="text" name="usernameInput" />
+                    <input onChange={this.handleInput} type="text" name="username" />
                     <br></br>
                     <label for="Password">Password   </label>
-                    <input onChange={this.handleInput} type="password" name="passwordInput" />
+                    <input onChange={this.handleInput} type="password" name="password" />
                     <br />
                     <button onClick={this.handleLogin}>Login</button>
                 </div>
