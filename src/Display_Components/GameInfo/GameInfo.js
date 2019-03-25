@@ -11,14 +11,15 @@ class GameInfo extends Component {
         this.state = {
             game: '',
             user_games: [],
-            played: false
+            played: false,
+            rating: '',
+            content: '',
         }
     }
 
     //fetch game 
     gameId = parseInt(this.props.match.params.gameId)
     game = () => {
-        debugger
         return fetch(`${gameUrl}/${this.gameId}`)
             .then(resp => resp.json())
             .then(game => this.setState({ game: game }))
@@ -42,18 +43,23 @@ class GameInfo extends Component {
     }
 
     playedGame = () => {
-        debugger
         this.setState({ played: this.state.user_games.includes(this.state.game) })
         //if the game is in the user_games array return true
     }
 
     renderCheckbox = () => {
-        debugger
         if (this.state.played) {
             return <input onChange={e => this.handleClick(this.props.user, this.state.game, e)} type="checkbox" name="played" id="played" checked />
         } else {
             return <input onChange={e => this.handleClick(this.props.user, this.state.game, e)} type="checkbox" name="played" id="played" />
         }
+    }
+
+    //Grabbing review 
+    handleChange = e => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
 
 
@@ -72,7 +78,22 @@ class GameInfo extends Component {
                 {this.renderCheckbox()}
                 <label>Completed?</label>
                 <input type="checkbox" name="completed" />
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut molestie sagittis erat et rhoncus. Donec dictum, augue eget dictum rhoncus, nulla justo convallis nunc, quis sollicitudin elit urna a sem. Vestibulum quam metus, volutpat quis venenatis nec, imperdiet eget neque. Aliquam fermentum lorem erat, tincidunt bibendum nisl fringilla id. Vestibulum sagittis a nisi sed ultrices. Fusce ultricies consequat pulvinar. Fusce in hendrerit dui. Aliquam tincidunt eros orci, nec vulputate eros porta vitae. Vivamus interdum consectetur rutrum.</p>
+                <div className='write-review'>
 
+                </div>
+                <strong> Leave a review</strong>
+                <br />
+                <textarea name="content" className="review-box" onChange={this.handleChange}></textarea>
+                <br />
+                <select name="rating" onChange={this.handleChange}>
+                    <option value="">Choose a rating</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
             </div>
         );
     }
