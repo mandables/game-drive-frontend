@@ -108,6 +108,19 @@ class GameInfo extends Component {
                     </select>
                     <input type="submit" value="Submit" onClick={this.submitReview} />
                 </form>
+                <br />
+                <div className="review">
+                    <div className="review-name">
+                        <strong>Mani</strong>
+                    </div>
+                    <div className="rating">
+                        <text>5</text>
+                    </div>
+                    <div className="review-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut molestie sagittis erat et rhoncus. Donec dictum, augue eget dictum rhoncus, nulla justo convallis nunc, quis sollicitudin elit urna a sem. Vestibulum quam metus, volutpat quis venenatis nec, imperdiet eget neque. Aliquam fermentum lorem erat, tincidunt bibendum nisl fringilla id.</p>
+                    </div>
+
+                </div>
 
             </div>
         );
