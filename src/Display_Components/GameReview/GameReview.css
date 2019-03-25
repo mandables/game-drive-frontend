@@ -1,0 +1,34 @@
+.review-box {
+    width: 80%;
+    height: 100px;
+}
+
+.review {
+    width: 500px;
+    height:  auto;
+    /* background-color: grey; */
+    box-sizing: border-box;
+    /* display: inline-block; */
+    /* word-break: break-all; */
+    border-bottom: 1px solid gray;
+}
+
+.rating {
+display: inline-flex;
+
+
+}
+
+.review-name {
+    padding: 10px;
+    /* top: 100px; */
+    display: inline-block;
+}
+
+.review-content {
+    /* text-overflow: ellipsis;
+    overflow: hidden; */
+    padding: 2px;
+    margin: 5px;
+    /* font-size: 10px; */
+}

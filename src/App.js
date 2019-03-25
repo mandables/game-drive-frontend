@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, withRouter, redirect, Switch } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import Content from './Container_Components/Content/Content'
 import Sidebar from './Display_Components/Sidebar/Sidebar'
 import Welcome from './Container_Components/Welcome/Welcome'

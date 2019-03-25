@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, withRouter, redirect } from 'react-router-dom'
+// import { BrowserRouter as Router, Route, withRouter, redirect } from 'react-router-dom'
 import './GameList.css';
 import GameCard from '../../Display_Components/GameCard/GameCard'
 
