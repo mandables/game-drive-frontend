@@ -4,6 +4,7 @@ import API from '../../API'
 
 const URL = 'http://localhost:3001/api/v1/user_games'
 const gameUrl = 'http://localhost:3001/api/v1/games'
+const reviewUrl = 'http://localhost:3001/api/v1/reviews'
 
 class GameInfo extends Component {
     constructor(props) {
@@ -61,6 +62,16 @@ class GameInfo extends Component {
             [e.target.name]: e.target.value
         })
     }
+    //Creating review 
+    submitReview = e => {
+        e.preventDefault()
+        fetch(reviewUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: this.props.user.user_id, game_id: this.state.game.id, content: this.state.content, rating: this.state.rating })
+        }).then(this.content.value = '', this.rating.value = '')
+
+    }
 
 
 
@@ -84,16 +95,20 @@ class GameInfo extends Component {
                 </div>
                 <strong> Leave a review</strong>
                 <br />
-                <textarea name="content" className="review-box" onChange={this.handleChange}></textarea>
-                <br />
-                <select name="rating" onChange={this.handleChange}>
-                    <option value="">Choose a rating</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
+                <form>
+                    <textarea name="content" className="review-box" onChange={this.handleChange} ref={text => this.content = text}></textarea>
+                    <br />
+                    <select name="rating" onChange={this.handleChange} ref={select => this.rating = select}>
+                        <option value="">Choose a rating</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <input type="submit" value="Submit" onClick={this.submitReview} />
+                </form>
+
             </div>
         );
     }
