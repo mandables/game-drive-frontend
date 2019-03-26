@@ -20,7 +20,8 @@ class Sidebar extends Component {
                     <hr />
                     <div className="all-games">
                         <Link
-                            to='/gamer'>
+                            to={`/games`}
+                        >
                             <h2 ><FontAwesomeIcon icon="gamepad" />All Games</h2>
                         </Link>
                     </div>
@@ -29,16 +30,19 @@ class Sidebar extends Component {
                     <br />
                     <hr />
                     <div className="my-games">
-                        <b id="my-games-text"><FontAwesomeIcon icon="bookmark" />MY GAMES</b>
+                        <Link
+                            to={`/gamer/${this.props.user.user_id}`}
+                        ><b id="my-games-text"><FontAwesomeIcon icon="bookmark" />MY GAMES</b></Link>
+
                     </div>
                     <div className="signout">
 
                         <h3 onClick={this.props.signout}>&emsp;<FontAwesomeIcon icon="sign-out-alt" />Signout</h3>
                     </div>
-                </div>
+                </div >
 
 
-            </div>
+            </div >
         )
     }
 }

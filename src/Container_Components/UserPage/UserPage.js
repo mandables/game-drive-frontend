@@ -36,7 +36,7 @@ class UserPage extends Component {
 
         return (
             <div className='user-main'>
-                <Sidebar />
+                <Sidebar signout={this.props.signout} user={this.props.user} />
                 <h1>{this.props.user.username}</h1>
                 <hr className="main-line" />
                 <div className="user-page">
