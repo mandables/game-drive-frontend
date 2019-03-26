@@ -5,6 +5,7 @@ import Sidebar from './Display_Components/Sidebar/Sidebar'
 import Welcome from './Container_Components/Welcome/Welcome'
 import Login from './Display_Components/Login/Login'
 import WelcomeOptions from './Display_Components/WelcomeOptions/WelcomeOptions'
+import UserPage from './Container_Components/UserPage/UserPage'
 import API from './API'
 import './App.css';
 
@@ -25,7 +26,7 @@ class App extends Component {
         this.props.history.push('/')
       } else {
         this.signin(data)
-        this.props.history.push('/games')
+
       }
     })
   }
@@ -50,6 +51,9 @@ class App extends Component {
         <Route
           path="/games"
           render={routerProps => <Content signout={this.signout} signin={this.signin} user={this.state} {...routerProps} />} />
+        <Route
+          path={`/gamer/:userId`}
+          render={routerProps => <UserPage user={this.state} {...routerProps} />} />
 
       </div>
 
