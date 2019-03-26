@@ -11,7 +11,7 @@ class Content extends Component {
     render() {
         return (
             <React.Fragment>
-                <Sidebar signout={this.props.signout} />
+                <Sidebar signout={this.props.signout} user={this.props.user} />
                 <Route
                     path="/games"
                     render={routerProps => <GamesContainer user={this.props.user} {...routerProps} />} />

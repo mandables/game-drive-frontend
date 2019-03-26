@@ -15,7 +15,10 @@ height: 100%; /* Full-height: remove this if you want "auto" height */
 
 }
 
-
+a {
+  color: white;
+  text-decoration: none;
+}
 
 .all-games {
   display: inline-flex;

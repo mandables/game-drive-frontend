@@ -23,7 +23,6 @@ class App extends Component {
     API.validate().then(data => {
       if (data.error) {
         this.signout()
-        this.props.history.push('/')
       } else {
         this.signin(data)
 
@@ -39,6 +38,7 @@ class App extends Component {
   signout = () => {
     localStorage.removeItem('token')
     this.setState({ username: '', user_id: '' })
+    this.props.history.push('/')
   }
 
 
