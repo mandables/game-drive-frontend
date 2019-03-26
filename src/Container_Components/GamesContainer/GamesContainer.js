@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, withRouter, redirect } from 'react-router-dom'
+import { Route, redirect } from 'react-router-dom'
 import './GamesContainer.css'
 import GameList from '../../Display_Components/GameList/GameList'
 import GameInfo from '../../Display_Components/GameInfo/GameInfo'

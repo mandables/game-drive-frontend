@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, withRouter, redirect } from 'react-router-dom'
+// import { BrowserRouter as Router, Route, withRouter, redirect } from 'react-router-dom'
 import './GameList.css';
 import GameCard from '../../Display_Components/GameCard/GameCard'
 
@@ -16,12 +16,13 @@ class GameList extends Component {
                 key={game.id} />
         })
     }
+
     render() {
         return (
             <div className="mainpage">
                 <h1>All Games</h1>
                 <hr className="main-line" />
-                {this.allGameCards()}
+                {this.allGameCards()[0]}
             </div >
         );
     }

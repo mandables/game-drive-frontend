@@ -1,3 +1,14 @@
+@font-face {
+  font-family: 'Odachi';
+  src: url('Odachi.otf') format('otf');
+  font-family: Arkhip;
+  src: url('Arkhip_font.ttf')
+}
+
+body {
+  font-family: "Arkhip"
+}
+
 .App {
   text-align: center;
 }

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, withRouter, redirect } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import './Content.css';
 import GamesContainer from '../GamesContainer/GamesContainer'
-import Login from '../../Display_Components/Login/Login'
-import Welcome from '../../Container_Components/Welcome/Welcome'
-import API from '../../API'
+
 import Sidebar from '../../Display_Components/Sidebar/Sidebar'
 
 class Content extends Component {
