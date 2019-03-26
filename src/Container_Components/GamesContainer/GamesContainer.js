@@ -28,6 +28,7 @@ class GamesContainer extends Component {
     render() {
 
         return (
+
             <div className="game-display">
                 <Route
                     exact path="/games"
@@ -37,7 +38,9 @@ class GamesContainer extends Component {
                     render={routerProps => {
                         return <GameInfo user={this.props.user} {...routerProps} />
                     }} />
+
             </div>
+
 
         );
     }

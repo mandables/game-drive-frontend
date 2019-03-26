@@ -2,18 +2,10 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom'
 import './Content.css';
 import GamesContainer from '../GamesContainer/GamesContainer'
-
+import UserPage from '../UserPage/UserPage'
 import Sidebar from '../../Display_Components/Sidebar/Sidebar'
 
 class Content extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            user: '',
-        }
-    }
-
-    //
 
 
     render() {
@@ -23,9 +15,9 @@ class Content extends Component {
                 <Route
                     path="/games"
                     render={routerProps => <GamesContainer user={this.props.user} {...routerProps} />} />
-                {/* <Route
-                    path="/"
-                    render={routerProps => <Welcome {...routerProps} user={this.state.user} signin={this.props.signin} />} /> */}
+                <Route
+                    path={`/gamer/${this.props.user.user_id}`}
+                    render={routerProps => <UserPage user={this.props.user} {...routerProps} />} />
             </React.Fragment>
         );
     }

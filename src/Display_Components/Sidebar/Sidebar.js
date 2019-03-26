@@ -19,7 +19,10 @@ class Sidebar extends Component {
                     <h1> Game Drive</h1>
                     <hr />
                     <div className="all-games">
-                        <h2 ><FontAwesomeIcon icon="gamepad" />All Games</h2>
+                        <Link
+                            to='/gamer'>
+                            <h2 ><FontAwesomeIcon icon="gamepad" />All Games</h2>
+                        </Link>
                     </div>
 
                     <br />
