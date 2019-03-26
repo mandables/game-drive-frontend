@@ -7,7 +7,7 @@ class GameCard extends Component {
         return (
             <div className='card-main'>
                 <Link
-                    key={this.props.game.id}
+                    // key={this.props.game.id}
                     to={`/games/${this.props.game.id}`}>
                     <img className="card-img" src={this.props.game.image} alt="" />
                 </Link>
