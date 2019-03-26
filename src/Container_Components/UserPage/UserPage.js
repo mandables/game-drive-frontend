@@ -15,16 +15,12 @@ class UserPage extends Component {
         }
     }
 
-    //fetch user and their games
+    //fetch user's games
     fetchUserGames = () => {
-        if (this.props.user) {
-            debugger
-            fetch(`${url}/${this.props.user}`)
-                .then(resp => resp.json())
-                .then(array => this.setState({ userGames: array }))
-        } else {
-            return null
-        }
+        let id = parseInt(this.props.match.params.userId)
+        fetch(`${url}/${id}`)
+            .then(resp => resp.json())
+            .then(array => this.setState({ userGames: array.games }))
     }
 
     componentDidMount() {
@@ -44,8 +40,8 @@ class UserPage extends Component {
                 <h1>{this.props.user.username}</h1>
                 <hr className="main-line" />
                 <div className="user-page">
-                    {this.props.user.user_id}
-                    {/* {this.userGames()} */}
+
+                    {this.userGames()}
                 </div >
             </div>
 
