@@ -17,18 +17,20 @@ class UserPage extends Component {
 
     //fetch user's games
     fetchUserGames = () => {
-        let id = parseInt(this.props.match.params.userId)
+
+        let id = parseInt(this.props.match.params.gamerId)
         fetch(`${url}/${id}`)
             .then(resp => resp.json())
             .then(array => this.setState({ userGames: array.games }))
     }
 
-    componentDidMount() {
-        this.fetchUserGames()
-    }
+    // componentDidMount() {
+    //     this.fetchUserGames()
+    // }
 
 
     userGames = () => {
+        this.fetchUserGames()
         return this.state.userGames.map(game => <UserGameCollection game={game} />)
     }
 
@@ -36,10 +38,9 @@ class UserPage extends Component {
 
         return (
             <div className='user-main'>
-                <Sidebar signout={this.props.signout} user={this.props.user} />
                 <h1>{this.props.user.username}</h1>
-                <hr className="main-line" />
-                <div className="user-page">
+                <hr className="user-line" />
+                <div className="user-games">
 
                     {this.userGames()}
                 </div >
