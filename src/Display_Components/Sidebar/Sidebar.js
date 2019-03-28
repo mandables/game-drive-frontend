@@ -37,7 +37,7 @@ class Sidebar extends Component {
                     </div>
                     <div className="signout">
 
-                        <h3 onClick={this.props.signout}>&emsp;<FontAwesomeIcon icon="sign-out-alt" />Signout</h3>
+                        <h3 onClick={() => this.props.signout()}>&emsp;<FontAwesomeIcon icon="sign-out-alt" />Signout</h3>
                     </div>
                 </div >
 

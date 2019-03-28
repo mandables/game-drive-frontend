@@ -62,7 +62,6 @@ class GameInfo extends Component {
     }
 
     playedGame = () => {
-
         let userIds = this.state.game.users.map(user => user.id)
         if (userIds.includes(this.props.user.user_id)) {
             this.setState({ played: true })
@@ -71,14 +70,6 @@ class GameInfo extends Component {
             this.setState({ played: false })
         }
         //if the game is in the user_games array return true
-    }
-
-    renderCheckbox = () => {
-        if (this.state.played) {
-            return <input onChange={e => this.handleClick(this.props.user, this.state.game, e)} type="checkbox" name="played" id="played" checked />
-        } else {
-            return <input onChange={e => this.handleClick(this.props.user, this.state.game, e)} type="checkbox" name="played" id="played" />
-        }
     }
 
     renderCollectionButton = () => {
@@ -104,7 +95,7 @@ class GameInfo extends Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(review)
         }).then(this.content.value = '', this.rating.value = '')
-            .then(this.game())
+            .then(this.game)
 
     }
 
@@ -158,8 +149,7 @@ class GameInfo extends Component {
                     <input type="submit" value="Submit" onClick={this.submitReview} />
                 </form>
                 <br />
-                {this.renderReviews()
-                }
+                {this.renderReviews()}
 
             </div >
         );

@@ -15,9 +15,9 @@ class Content extends Component {
                 <Route
                     path="/games"
                     render={routerProps => <GamesContainer user={this.props.user} {...routerProps} />} />
-                <Route
-                    path={`/gamer/${this.props.user.user_id}`}
-                    render={routerProps => <UserPage user={this.props.user} {...routerProps} />} />
+                {/* <Route
+                    path={`/gamer/:gamerId`}
+                    render={routerProps => <UserPage user={this.props.user} {...routerProps} />} /> */}
             </div >
         );
     }
