@@ -20,8 +20,21 @@ class GameList extends Component {
         })
     }
 
+    filteredGameCards = () => {
+        return this.filteredGames().map(game => {
+            return <GameCard
+                showGame={this.showGame}
+                game={game}
+                key={game.id} />
+        })
+    }
+
     handleSearch = e => {
         this.setState({ searchTerm: e.target.value })
+    }
+
+    filteredGames = () => {
+        return this.props.games.filter(game => game.title.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
     }
 
     render() {
@@ -35,8 +48,8 @@ class GameList extends Component {
                     <Searchbar handleSearch={this.handleSearch} />
                 </div>
 
-
-                {this.allGameCards()}
+                {this.filteredGameCards()}
+                {/* {this.allGameCards()} */}
 
 
             </div >
