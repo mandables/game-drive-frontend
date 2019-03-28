@@ -10,7 +10,7 @@ class Content extends Component {
 
     render() {
         return (
-            <React.Fragment>
+            <div className="content-main">
                 <Sidebar signout={this.props.signout} user={this.props.user} />
                 <Route
                     path="/games"
@@ -18,7 +18,7 @@ class Content extends Component {
                 <Route
                     path={`/gamer/${this.props.user.user_id}`}
                     render={routerProps => <UserPage user={this.props.user} {...routerProps} />} />
-            </React.Fragment>
+            </div >
         );
     }
 }

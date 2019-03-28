@@ -17,19 +17,19 @@ class WelcomeOptions extends Component {
 
     render() {
         return (
-            <div>
+            <div className="wo-main" >
                 <div >
 
                     <Link
                         to="/signup">
                         Signup
                             </Link>
-                    &ensp;
-                    <Link
-                        to="/games">
-                        Browse games
-                            </Link>
                 </div>
+                &ensp;
+                    <Link
+                    to="/games">
+                </Link>
+
 
             </div >
 

@@ -44,7 +44,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="app-main">
         <Route
           exact path='/'
           render={routerProps => <div> <Login {...routerProps} signin={this.signin} /> <WelcomeOptions /> </div>} />
