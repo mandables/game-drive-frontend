@@ -13,7 +13,7 @@ class GameInfo extends Component {
         this.state = {
             game: '',
             user_games: [],
-            played: '',
+            played: false,
             rating: '',
             content: '',
         }
@@ -22,36 +22,35 @@ class GameInfo extends Component {
     //fetch game 
 
     game = () => {
+
         let gameId = parseInt(this.props.match.params.gameId)
         return fetch(`${gameUrl}/${gameId}`)
             .then(resp => resp.json())
-            .then(game => this.setState({ game: game }, this.playedGame))
+            .then(game => this.setState({ game: game }))
+            .then(() => this.playedGame())
     }
 
     componentDidMount() {
-        API.getGames()
-            .then(games => {
-                this.setState({ user_games: games }, () => {
-                    this.game()
-                })
-            })
+        this.game()
+
     }
 
-    loadUserAndGameData = () => {
-        API.getGames()
-            .then(games => {
-                this.setState({ user_games: games }, this.playedGame
-                )
-            })
-    }
+    // loadUserAndGameData = () => {
+    //     API.getGames()
+    //         .then(games => {
+    //             this.setState({ user_games: games }, this.playedGame
+    //             )
+    //         })
+    // }
 
 
     addToCollection = (user, game, e) => {
+
         fetch(URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id: user.user_id, game_id: game.id, played: true })
-        }).then(this.loadUserAndGameData())
+        }).then(() => this.game())
     }
 
     removeFromCollection = (user, game) => {
@@ -59,13 +58,16 @@ class GameInfo extends Component {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id: user.user_id, game_id: game.id })
-        }).then(this.loadUserAndGameData())
+        }).then(() => this.game())
     }
 
     playedGame = () => {
-        if (this.state.user_games.map(g => g.id).includes(this.state.game.id)) {
+
+        let userIds = this.state.game.users.map(user => user.id)
+        if (userIds.includes(this.props.user.user_id)) {
             this.setState({ played: true })
-        } else {
+        }
+        else {
             this.setState({ played: false })
         }
         //if the game is in the user_games array return true
