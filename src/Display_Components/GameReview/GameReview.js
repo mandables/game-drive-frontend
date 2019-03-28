@@ -15,9 +15,7 @@ class GameReview extends Component {
                 <div className="rating">
                     {this.props.review.rating}
                 </div>
-                {/* <div > */}
                 <p className="review-content">{this.props.review.content}</p>
-                {/* </div> */}
 
             </div>
 

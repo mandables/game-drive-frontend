@@ -1,0 +1,10 @@
+.search-main {
+    padding: 10px;
+}
+
+.search-bar {
+    width: 50%;
+    border-radius: 10px;
+    height: 30px;
+    font-size: 20px
+}

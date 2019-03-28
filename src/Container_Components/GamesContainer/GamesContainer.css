@@ -6,6 +6,9 @@
 .game-display {
     padding-left: 280px;
     background-color: #1A1a1d;
+    width: 165vh;
+    overflow-x: hidden
+    
    
 }
 
