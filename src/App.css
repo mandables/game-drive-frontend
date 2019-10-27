@@ -1,20 +1,23 @@
 @font-face {
-  font-family: 'Odachi';
-  src: url('Odachi.otf') format('otf');
+  font-family: "Odachi";
+  src: url("Odachi.otf") format("otf");
   font-family: Arkhip;
-  src: url('Arkhip_font.ttf')
+  src: url("Arkhip_font.ttf");
 }
 
-body {
-  font-family: "Arkhip"
+html {
+  font-family: "Arkhip";
+  /* height: 100%;
+  margin: 0; */
 }
 
 .app-main {
   height: 100vh;
-  background-image: url('./images/Image\ 4.jpg');
-  background-size: 100%;
+  margin: 0;
+  background-image: url("./images/Image\ 4.jpg");
+  /* background-size: 100%; */
 }
 
-/* body {
-  padding-left: 350px; 
-} */
+body {
+  margin: 0;
+}
