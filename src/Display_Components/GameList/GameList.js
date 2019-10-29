@@ -35,8 +35,10 @@ class GameList extends Component {
                     <Searchbar handleSearch={this.handleSearch} />
                 </div>
 
-
-                {this.allGameCards()}
+                <div id="allgames-container">
+{this.allGameCards()}
+                </div>
+                
 
 
             </div >

@@ -14,3 +14,7 @@
   display: flex;
   flex: right;
 }
+
+#pages {
+  text-align: center;
+}

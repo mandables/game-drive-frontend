@@ -1,22 +1,27 @@
 .card-img {
-    height: 200px;
-    width: auto;
+  height: 150px;
+  width: 200px;
 }
 
 .card-main {
-    color:#c2cad0;
-    background-color:rgba(114, 109, 109, 0.3);
-    padding: 20px;
-    display: inline-block;
-    width: 200px;
-    height: auto;
-    text-align: center;
-    border: #c2cad0 solid 1px;
-    border-radius: 10px;
-    margin: 10px;
+  /* color: #c2cad0;
+  background-color: rgba(114, 109, 109, 0.3); */
+  padding: 20px;
+  display: inline-block;
+  /* width: 200px;
+  height: auto; */
+  text-align: center;
+  /* border: #c2cad0 solid 1px;
+  border-radius: 10px; */
+  margin: 10px;
 }
 
 .game-title {
-    position: relative;
-    font-size: 1vw;
+  position: relative;
+  font-size: 1.25vw;
+  border-bottom: #c2cad0 solid 1px;
+  border-left: #c2cad0 solid 1px;
+  border-right: #c2cad0 solid 1px;
+  width: 200px;
+  bottom: 12px;
 }
