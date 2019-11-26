@@ -6,7 +6,7 @@ import GameInfo from "../../Display_Components/GameInfo/GameInfo";
 import Sidebar from "../../Display_Components/Sidebar/Sidebar";
 
 // const URL = "http://localhost:3001/api/v1/games";
-const newURL = "https://api.rawg.io/api/games";
+const newURL = process.env.REACT_APP_EXTERNAL_API;
 
 class GamesContainer extends Component {
   constructor(props) {
