@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import { Route, withRouter } from "react-router-dom";
-import Content from "./Container_Components/Content/Content";
 import Sidebar from "./Display_Components/Sidebar/Sidebar";
-import Welcome from "./Container_Components/Welcome/Welcome";
 import Login from "./Display_Components/Login/Login";
-import WelcomeOptions from "./Display_Components/WelcomeOptions/WelcomeOptions";
 import UserPage from "./Container_Components/UserPage/UserPage";
 import GamesContainer from "./Container_Components/GamesContainer/GamesContainer";
-import API from "./API";
+import API from "./adapters/API";
 import "./App.css";
 
 class App extends Component {

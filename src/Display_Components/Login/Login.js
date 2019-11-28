@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Login.css";
-import API from "../../API";
+import API from "../../adapters/API";
 
 class Login extends Component {
   constructor(props) {

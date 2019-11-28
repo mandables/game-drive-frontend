@@ -1,49 +1,76 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // import { BrowserRouter as Router, Route, withRouter, redirect } from 'react-router-dom'
-import './GameList.css';
-import GameCard from '../../Display_Components/GameCard/GameCard'
-import Searchbar from '../Searchbar/Searchbar'
+import "./GameList.css";
+import GameCard from "../../Display_Components/GameCard/GameCard";
+import Searchbar from "../Searchbar/Searchbar";
+import API from "../../adapters/API";
 
-
+const URL = process.env.REACT_APP_EXTERNAL_API;
 
 class GameList extends Component {
-    state = {
-        searchTerm: ''
-    }
-    //Render all games
-    allGameCards = () => {
-        return this.props.games.map(game => {
-            return <GameCard
-                showGame={this.showGame}
-                game={game}
-                key={game.id} />
-        })
-    }
+  state = {
+    searchTerm: "",
+    games: [],
+    nextPage: "",
+    previousPage: ""
+  };
 
-    handleSearch = e => {
-        this.setState({ searchTerm: e.target.value })
-    }
+  setGamesAndPaginationState = object => {
+    this.setState({
+      games: object.results,
+      nextPage: object.next,
+      previousPage: object.previous
+    });
+  };
 
-    render() {
-        return (
-            <div className="mainpage">
-                <div className="header">
-                    <h1>All Games</h1>
-                    <hr className="main-line" />
-                </div>
-                <div className="search">
-                    <Searchbar handleSearch={this.handleSearch} />
-                </div>
+  componentDidMount() {
+    API.fetchGames(URL).then(this.setGamesAndPaginationState);
+  }
 
-                <div id="allgames-container">
-{this.allGameCards()}
-                </div>
-                
+  changePage = url => {
+    API.fetchGames(url).then(this.setGamesAndPaginationState);
+  };
+  //Render all games
+  allGameCards = () => {
+    return this.state.games.map(game => {
+      return <GameCard showGame={this.showGame} game={game} key={game.id} />;
+    });
+  };
 
+  handleSearch = e => {
+    this.setState({ searchTerm: e.target.value });
+  };
 
-            </div >
-        );
-    }
+  render() {
+    const { previousPage, nextPage } = this.state;
+    return (
+      <div className="mainpage">
+        <div className="header">
+          <h1>All Games</h1>
+          <hr className="main-line" />
+        </div>
+        <div className="search">
+          <Searchbar handleSearch={this.handleSearch} />
+        </div>
+
+        <div id="allgames-container">{this.allGameCards()}</div>
+        <div id="pages">
+          <button
+            onClick={() => this.changePage(this.state.previousPage)}
+            id="previous"
+          >
+            Previous
+          </button>
+          <button
+            onClick={() => this.changePage(this.state.nextPage)}
+            id="next"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default GameList;

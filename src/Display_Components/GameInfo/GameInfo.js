@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./GameInfo.css";
-import API from "../../API";
+import API from "../../adapters/API";
 import GameReview from "../GameReview/GameReview";
 
 const URL = "http://localhost:3001/api/v1/user_games";
