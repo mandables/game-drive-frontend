@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import { Route, redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import "./GamesContainer.css";
 import GameList from "../../Display_Components/GameList/GameList";
 import GameInfo from "../../Display_Components/GameInfo/GameInfo";
-import Sidebar from "../../Display_Components/Sidebar/Sidebar";
-import API from "../../adapters/API";
-
-// const URL = "http://localhost:3001/api/v1/games";
-const URL = process.env.REACT_APP_EXTERNAL_API;
-
 class GamesContainer extends Component {
   render() {
     return (
