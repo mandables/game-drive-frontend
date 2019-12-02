@@ -40,24 +40,23 @@ class GameInfo extends Component {
   // }
 
   getGameGenres = game => {
-    if (this.state.game) {
-      let genreArray = [game.id];
-      game.genres.forEach(genre => genreArray.push(genre.name));
-      debugger;
-      return genreArray;
+    if (game) {
+      return game.genres.map(genre => genre.name);
     }
   };
 
   addGameToUserBackend = (user, gameObject) => {
+    let genres = this.getGameGenres(this.state.game);
     //First add some of the game details to own API if it doesn't already exist
     let gameAndUserObject = {
       title: gameObject.name,
       img_url: gameObject.background_image,
       description: gameObject.description_raw,
       rawg_id: gameObject.id,
-      user_id: this.props.user.id
+      user_id: user.user_id,
+      game_genres: genres
     };
-    // console.log(game);
+    console.log(gameAndUserObject);
     API.post(`${internalAPIURL}user_games`, gameAndUserObject);
   };
 

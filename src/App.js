@@ -17,24 +17,25 @@ class App extends Component {
   }
 
   componentDidMount() {
-    //   API.validate().then(data => {
-    //     if (data.error) {
-    //       this.signout()
-    //     } else {
-    //       this.signin(data)
-    //     }
-    //   })
+    API.validate().then(data => {
+      if (data.error) {
+        this.signout();
+      } else {
+        this.signin(data);
+      }
+    });
   }
 
   signin = user => {
     localStorage.setItem("token", user.token);
+    // debugger;
     this.setState({ username: user.username, user_id: user.user_id });
   };
 
   signout = () => {
     localStorage.removeItem("token");
     this.setState({ username: "", user_id: "" });
-    this.props.history.push("/login");
+    this.props.history.push("/");
   };
 
   render() {
