@@ -4,26 +4,24 @@ import API from "../../adapters/API";
 import GameReview from "../GameReview/GameReview";
 
 const URL = "http://localhost:3001/api/v1/user_games";
-const gameUrl = process.env.REACT_APP_EXTERNAL_API;
+const internalAPIURL = process.env.REACT_APP_INTERNAL_API;
+const rawgGameUrl = process.env.REACT_APP_EXTERNAL_API;
 const reviewUrl = "http://localhost:3001/api/v1/reviews";
 
 class GameInfo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      game: "",
-      user_games: [],
-      played: false,
-      rating: "",
-      content: ""
-    };
-  }
+  state = {
+    game: "",
+    user_games: [],
+    played: false,
+    rating: "",
+    content: ""
+  };
 
   //fetch game
 
   game = () => {
     let gameId = parseInt(this.props.match.params.gameId);
-    return fetch(`${gameUrl}/${gameId}`)
+    return fetch(`${rawgGameUrl}/${gameId}`)
       .then(resp => resp.json())
       .then(game => this.setState({ game: game }));
     //   .then(() => this.playedGame());
@@ -41,16 +39,34 @@ class GameInfo extends Component {
   //         })
   // }
 
-  addToCollection = (user, game, e) => {
-    fetch(URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user_id: user.user_id,
-        game_id: game.id,
-        played: true
-      })
-    }).then(() => this.game());
+  getGameGenres = game => {
+    if (this.state.game) {
+      let genreArray = [game.id];
+      game.genres.forEach(genre => genreArray.push(genre.name));
+      debugger;
+      return genreArray;
+    }
+  };
+
+  addGameToUserBackend = (user, gameObject) => {
+    //First add some of the game details to own API if it doesn't already exist
+    let gameAndUserObject = {
+      title: gameObject.name,
+      img_url: gameObject.background_image,
+      description: gameObject.description_raw,
+      rawg_id: gameObject.id,
+      user_id: this.props.user.id
+    };
+    // console.log(game);
+    API.post(`${internalAPIURL}user_games`, gameAndUserObject);
+  };
+
+  addToUserCollection = (user, game) => {
+    let object = {
+      user_id: user.user_id,
+      game_id: game.id
+    };
+    API.post(`${internalAPIURL}user_games`, object);
   };
 
   removeFromCollection = (user, game) => {
@@ -87,7 +103,9 @@ class GameInfo extends Component {
       return (
         <button
           className="add-button"
-          onClick={() => this.addToCollection(this.props.user, this.state.game)}
+          onClick={() =>
+            this.addGameToUserBackend(this.props.user, this.state.game)
+          }
         >
           Add to collection
         </button>
@@ -96,47 +114,48 @@ class GameInfo extends Component {
   };
 
   //Grabbing review
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
+  // handleChange = e => {
+  //   this.setState({
+  //     [e.target.name]: e.target.value
+  //   });
+  // };
   //Creating review
-  submitReview = e => {
-    let review = {
-      user_id: this.props.user.user_id,
-      username: this.props.user.username,
-      game_id: this.state.game.id,
-      content: this.state.content,
-      rating: this.state.rating
-    };
-    e.preventDefault();
-    fetch(reviewUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(review)
-    })
-      .then((this.content.value = ""), (this.rating.value = ""))
-      .then(this.game);
-  };
+  // submitReview = e => {
+  //   let review = {
+  //     user_id: this.props.user.user_id,
+  //     username: this.props.user.username,
+  //     game_id: this.state.game.id,
+  //     content: this.state.content,
+  //     rating: this.state.rating
+  //   };
+  //   e.preventDefault();
+  //   fetch(reviewUrl, {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(review)
+  //   })
+  //     .then((this.content.value = ""), (this.rating.value = ""))
+  //     .then(this.game);
+  // };
 
   //Displaying game reviews
-  renderReviews = () => {
-    return this.state.game.reviews
-      ? this.state.game.reviews.map(review => (
-          <div>
-            <GameReview review={review} key={review.id} /> <br />
-          </div>
-        ))
-      : null;
-  };
+  // renderReviews = () => {
+  //   return this.state.game.reviews
+  //     ? this.state.game.reviews.map(review => (
+  //         <div>
+  //           <GameReview review={review} key={review.id} /> <br />
+  //         </div>
+  //       ))
+  //     : null;
+  // };
 
   render() {
+    // this.getGameGenres(this.state.game);
     const { game } = this.state;
     return (
       <div className="gameinfo-main">
         <div className="game-info">
-          <div className="gameinfo-title">{this.state.game.title}</div>
+          <div className="gameinfo-title">{game.title}</div>
           <img src={game.background_image} alt="" />
           <br />
           <div>{this.renderCollectionButton()}</div>
@@ -173,7 +192,7 @@ class GameInfo extends Component {
           <input type="submit" value="Submit" onClick={this.submitReview} />
         </form>
         <br />
-        {this.renderReviews()}
+        {/* {this.renderReviews()} */}
       </div>
     );
   }
