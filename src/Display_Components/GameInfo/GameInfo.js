@@ -12,23 +12,30 @@ class GameInfo extends Component {
   state = {
     game: "",
     user_games: [],
-    played: false,
-    rating: "",
-    content: ""
+    // played: false,
+    // rating: "",
+    // content: "",
+    InCollection: false
   };
 
   //fetch game
 
-  game = () => {
-    let gameId = parseInt(this.props.match.params.gameId);
+  game = gameId => {
+    // const gameId = parseInt(this.props.match.params.gameId);
     return fetch(`${rawgGameUrl}/${gameId}`)
       .then(resp => resp.json())
-      .then(game => this.setState({ game: game }));
+      .then(game => this.setState({ game }));
     //   .then(() => this.playedGame());
   };
 
+  //Check if the game is in the user's collection
+
   componentDidMount() {
-    this.game();
+    const gameId = parseInt(this.props.match.params.gameId);
+    this.game(gameId).then(() => {
+      debugger;
+      API.GameInUserCollection(this.props.user.user_id, gameId);
+    });
   }
 
   // loadUserAndGameData = () => {

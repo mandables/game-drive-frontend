@@ -1,5 +1,6 @@
 const signinURL = "http://localhost:3001/signin";
 const validateURL = "http://localhost:3001/validate";
+const BASE_URL = "http://localhost:3001/api/v1/";
 
 class API {
   static signin(user) {
@@ -23,7 +24,7 @@ class API {
       headers: {
         Authorization: localStorage.getItem("token")
       }
-    }).then(resp => resp.json());
+    }).then(API.jsonify);
   }
 
   static post(url, bodyObject) {
@@ -34,17 +35,22 @@ class API {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(bodyObject)
-    }).then(resp => resp.json());
+    }).then(API.jsonify);
   }
+
+  static jsonify = resp => resp.json();
 
   static fetchGames = url => {
     if (url) {
       return fetch(url, {
         headers: { "User-Agent": "Game Drive" }
-      }).then(resp => resp.json());
+      }).then(API.jsonify);
     }
   };
 
+  static isGameInUserCollection = (user_id, game_id) => {
+    return API.get(BASE_URL + "in_collection");
+  };
   static addGameToUserCollection = (url, user, game) => {
     fetch(URL, {
       method: "POST",
@@ -55,6 +61,19 @@ class API {
         played: true
       })
     }).then(() => this.game());
+  };
+
+  static GameInUserCollection = (user_id, game_id) => {
+    // if (user_id) {
+    debugger;
+    let object = {
+      user_id,
+      rawg_id: game_id
+    };
+    console.log(object);
+    console.log(BASE_URL + "in_collection");
+    this.post(BASE_URL + "in_collection", object);
+    // }
   };
 }
 
