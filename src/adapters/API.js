@@ -38,14 +38,9 @@ class API {
     }).then(this.jsonify);
   }
 
-  static delete(url, bodyObject) {
+  static delete(url) {
     return fetch(url, {
-      method: "DELETE",
-      headers: {
-        Authorization: localStorage.getItem("token"),
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(bodyObject)
+      method: "DELETE"
     });
   }
 
@@ -63,7 +58,7 @@ class API {
     return this.get(BASE_URL + "in_collection");
   };
   static addGameToUserCollection = (url, user, game) => {
-    fetch(URL, {
+    return fetch(URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -71,20 +66,11 @@ class API {
         game_id: game.id,
         played: true
       })
-    }).then(() => this.game());
+    });
   };
 
-  removeFromUserCollection = (user, game) => {
-    let object = {
-      user_id: user.id,
-      game_id: game.id
-    }
-    this.delete()
-    fetch(URL, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id: user.user_id, game_id: game.id })
-    }).then(() => this.game());
+  static removeFromUserCollection = (user, game) => {
+    return this.delete(BASE_URL + game.id + "/" + user.user_id);
   };
 
   static GameInUserCollection = (user_id, game_id) => {
@@ -95,8 +81,6 @@ class API {
     console.log(BASE_URL + "in_collection");
     return this.post(BASE_URL + "in_collection", object);
   };
-
-
 }
 
 export default API;

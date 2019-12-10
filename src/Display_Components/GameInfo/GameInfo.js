@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./GameInfo.css";
 import API from "../../adapters/API";
 import GameReview from "../GameReview/GameReview";
+import { runInThisContext } from "vm";
 
 const URL = "http://localhost:3001/api/v1/user_games";
 const internalAPIURL = process.env.REACT_APP_INTERNAL_API;
@@ -65,7 +66,7 @@ class GameInfo extends Component {
       game_genres: genres
     };
     console.log(gameAndUserObject);
-    API.post(`${internalAPIURL}user_games`, gameAndUserObject);
+    return API.post(`${internalAPIURL}user_games`, gameAndUserObject);
   };
 
   addToUserCollection = (user, game) => {
@@ -75,8 +76,6 @@ class GameInfo extends Component {
     };
     API.post(`${internalAPIURL}user_games`, object);
   };
-
-  
 
   playedGame = () => {
     let userIds = this.state.game.users.map(user => user.id);
@@ -94,7 +93,10 @@ class GameInfo extends Component {
         <button
           className="remove-button"
           onClick={() =>
-            this.removeFromCollection(this.props.user, this.state.game)
+            API.removeFromUserCollection(
+              this.props.user,
+              this.state.game
+            ).then(() => this.setState({ inCollection: false }))
           }
         >
           Remove from collection
@@ -105,7 +107,10 @@ class GameInfo extends Component {
         <button
           className="add-button"
           onClick={() =>
-            this.addGameToUserBackend(this.props.user, this.state.game)
+            this.addGameToUserBackend(
+              this.props.user,
+              this.state.game
+            ).then(() => this.setState({ inCollection: true }))
           }
         >
           Add to collection
