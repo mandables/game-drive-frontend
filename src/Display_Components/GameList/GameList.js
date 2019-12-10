@@ -11,14 +11,16 @@ class GameList extends Component {
     searchTerm: "",
     games: [],
     nextPage: "",
-    previousPage: ""
+    previousPage: "",
+    loading: true
   };
 
   setGamesAndPaginationState = object => {
     this.setState({
       games: object.results,
       nextPage: object.next,
-      previousPage: object.previous
+      previousPage: object.previous,
+      loading: false
     });
   };
 
@@ -46,7 +48,9 @@ class GameList extends Component {
 
   render() {
     const { previousPage, nextPage } = this.state;
-    return (
+    return this.state.loading ? (
+      "Loading"
+    ) : (
       <div className="mainpage">
         <div className="header">
           <h1>All Games</h1>
