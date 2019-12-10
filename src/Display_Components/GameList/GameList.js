@@ -31,13 +31,17 @@ class GameList extends Component {
   };
   //Render all games
   allGameCards = () => {
+    if (this.state.games.length === 0) {
+      return "No results";
+    }
     return this.state.games.map(game => {
       return <GameCard showGame={this.showGame} game={game} key={game.id} />;
     });
   };
 
   handleSearch = e => {
-    this.setState({ searchTerm: e.target.value });
+    e.preventDefault();
+    API.search(e.target.search.value).then(this.setGamesAndPaginationState);
   };
 
   render() {

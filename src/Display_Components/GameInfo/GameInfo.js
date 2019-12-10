@@ -1,83 +1,64 @@
 import React, { Component } from "react";
 import "./GameInfo.css";
 import API from "../../adapters/API";
-import GameReview from "../GameReview/GameReview";
 
-const URL = "http://localhost:3001/api/v1/user_games";
-const gameUrl = process.env.REACT_APP_EXTERNAL_API;
-const reviewUrl = "http://localhost:3001/api/v1/reviews";
+const internalAPIURL = process.env.REACT_APP_INTERNAL_API;
 
 class GameInfo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      game: "",
-      user_games: [],
-      played: false,
-      rating: "",
-      content: ""
-    };
-  }
-
-  //fetch game
-
-  game = () => {
-    let gameId = parseInt(this.props.match.params.gameId);
-    return fetch(`${gameUrl}/${gameId}`)
-      .then(resp => resp.json())
-      .then(game => this.setState({ game: game }));
-    //   .then(() => this.playedGame());
+  state = {
+    game: "",
+    user_games: [],
+    inCollection: "",
+    loading: true
   };
 
   componentDidMount() {
-    this.game();
+    const gameId = parseInt(this.props.match.params.gameId);
+    API.GameInUserCollection(this.props.user.user_id, gameId).then(boolean =>
+      this.setState({ inCollection: boolean })
+    );
+    API.fetchGameInfo(gameId).then(game =>
+      this.setState({ loading: false, game })
+    );
   }
 
-  // loadUserAndGameData = () => {
-  //     API.getGames()
-  //         .then(games => {
-  //             this.setState({ user_games: games }, this.playedGame
-  //             )
-  //         })
-  // }
-
-  addToCollection = (user, game, e) => {
-    fetch(URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user_id: user.user_id,
-        game_id: game.id,
-        played: true
-      })
-    }).then(() => this.game());
-  };
-
-  removeFromCollection = (user, game) => {
-    fetch(URL, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id: user.user_id, game_id: game.id })
-    }).then(() => this.game());
-  };
-
-  playedGame = () => {
-    let userIds = this.state.game.users.map(user => user.id);
-    if (userIds.includes(this.props.user.user_id)) {
-      this.setState({ played: true });
-    } else {
-      this.setState({ played: false });
+  getGameGenres = game => {
+    if (game) {
+      return game.genres.map(genre => genre.name);
     }
-    //if the game is in the user_games array return true
+  };
+
+  addGameToUserBackend = (user, gameObject) => {
+    let genres = this.getGameGenres(this.state.game);
+    let gameAndUserObject = {
+      title: gameObject.name,
+      img_url: gameObject.background_image,
+      description: gameObject.description_raw,
+      rawg_id: gameObject.id,
+      user_id: user.user_id,
+      game_genres: genres
+    };
+    return API.post(`${internalAPIURL}user_games`, gameAndUserObject);
+  };
+
+  addToUserCollection = (user, game) => {
+    let object = {
+      user_id: user.user_id,
+      game_id: game.id
+    };
+    API.post(`${internalAPIURL}user_games`, object);
   };
 
   renderCollectionButton = () => {
-    if (this.state.played) {
+    if (this.state.inCollection) {
       return (
         <button
           className="remove-button"
           onClick={() =>
-            this.removeFromCollection(this.props.user, this.state.game)
+            API.removeFromUserCollection(
+              this.props.user,
+              this.state.game
+            ).then(() => this.setState({ inCollection: false }))
           }
         >
           Remove from collection
@@ -87,7 +68,12 @@ class GameInfo extends Component {
       return (
         <button
           className="add-button"
-          onClick={() => this.addToCollection(this.props.user, this.state.game)}
+          onClick={() =>
+            this.addGameToUserBackend(
+              this.props.user,
+              this.state.game
+            ).then(() => this.setState({ inCollection: true }))
+          }
         >
           Add to collection
         </button>
@@ -96,47 +82,49 @@ class GameInfo extends Component {
   };
 
   //Grabbing review
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
+  // handleChange = e => {
+  //   this.setState({
+  //     [e.target.name]: e.target.value
+  //   });
+  // };
   //Creating review
-  submitReview = e => {
-    let review = {
-      user_id: this.props.user.user_id,
-      username: this.props.user.username,
-      game_id: this.state.game.id,
-      content: this.state.content,
-      rating: this.state.rating
-    };
-    e.preventDefault();
-    fetch(reviewUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(review)
-    })
-      .then((this.content.value = ""), (this.rating.value = ""))
-      .then(this.game);
-  };
+  // submitReview = e => {
+  //   let review = {
+  //     user_id: this.props.user.user_id,
+  //     username: this.props.user.username,
+  //     game_id: this.state.game.id,
+  //     content: this.state.content,
+  //     rating: this.state.rating
+  //   };
+  //   e.preventDefault();
+  //   fetch(reviewUrl, {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(review)
+  //   })
+  //     .then((this.content.value = ""), (this.rating.value = ""))
+  //     .then(this.game);
+  // };
 
   //Displaying game reviews
-  renderReviews = () => {
-    return this.state.game.reviews
-      ? this.state.game.reviews.map(review => (
-          <div>
-            <GameReview review={review} key={review.id} /> <br />
-          </div>
-        ))
-      : null;
-  };
+  // renderReviews = () => {
+  //   return this.state.game.reviews
+  //     ? this.state.game.reviews.map(review => (
+  //         <div>
+  //           <GameReview review={review} key={review.id} /> <br />
+  //         </div>
+  //       ))
+  //     : null;
+  // };
 
   render() {
     const { game } = this.state;
-    return (
+    return this.state.loading ? (
+      "Loading"
+    ) : (
       <div className="gameinfo-main">
         <div className="game-info">
-          <div className="gameinfo-title">{this.state.game.title}</div>
+          <div className="gameinfo-title">{game.title}</div>
           <img src={game.background_image} alt="" />
           <br />
           <div>{this.renderCollectionButton()}</div>
@@ -147,7 +135,7 @@ class GameInfo extends Component {
                     <input type="checkbox" name="completed" /> */}
           <p>{game.description_raw}</p>
         </div>
-        <div className="write-review"></div>
+        {/* <div className="write-review"></div>
         <strong> Leave a review</strong>
         <br />
         <form>
@@ -173,7 +161,7 @@ class GameInfo extends Component {
           <input type="submit" value="Submit" onClick={this.submitReview} />
         </form>
         <br />
-        {this.renderReviews()}
+        {this.renderReviews()} */}
       </div>
     );
   }

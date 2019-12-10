@@ -12,33 +12,37 @@ class App extends Component {
     super();
     this.state = {
       username: "",
-      user_id: ""
+      user_id: "",
+      loading: true
     };
   }
 
   componentDidMount() {
-    //   API.validate().then(data => {
-    //     if (data.error) {
-    //       this.signout()
-    //     } else {
-    //       this.signin(data)
-    //     }
-    //   })
+    API.validate()
+      .then(data => {
+        if (data.error) {
+          this.signout();
+        } else {
+          this.signin(data);
+        }
+      })
+      .then(() => this.setState({ loading: false }));
   }
 
   signin = user => {
     localStorage.setItem("token", user.token);
+    // debugger;
     this.setState({ username: user.username, user_id: user.user_id });
   };
 
   signout = () => {
     localStorage.removeItem("token");
     this.setState({ username: "", user_id: "" });
-    this.props.history.push("/login");
+    this.props.history.push("/");
   };
 
   render() {
-    return (
+    return this.state.loading ? null : (
       <div className="app-main">
         <Route
           exact
