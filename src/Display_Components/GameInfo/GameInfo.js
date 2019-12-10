@@ -15,7 +15,8 @@ class GameInfo extends Component {
     // played: false,
     // rating: "",
     // content: "",
-    InCollection: false
+    inCollection: "",
+    loading: true
   };
 
   //fetch game
@@ -32,10 +33,10 @@ class GameInfo extends Component {
 
   componentDidMount() {
     const gameId = parseInt(this.props.match.params.gameId);
-    this.game(gameId).then(() => {
-      debugger;
-      API.GameInUserCollection(this.props.user.user_id, gameId);
-    });
+    API.GameInUserCollection(this.props.user.user_id, gameId).then(boolean =>
+      this.setState({ inCollection: boolean })
+    );
+    this.game(gameId).then(() => this.setState({ loading: false }));
   }
 
   // loadUserAndGameData = () => {
@@ -75,13 +76,7 @@ class GameInfo extends Component {
     API.post(`${internalAPIURL}user_games`, object);
   };
 
-  removeFromCollection = (user, game) => {
-    fetch(URL, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id: user.user_id, game_id: game.id })
-    }).then(() => this.game());
-  };
+  
 
   playedGame = () => {
     let userIds = this.state.game.users.map(user => user.id);
@@ -94,7 +89,7 @@ class GameInfo extends Component {
   };
 
   renderCollectionButton = () => {
-    if (this.state.played) {
+    if (this.state.inCollection) {
       return (
         <button
           className="remove-button"
@@ -158,7 +153,9 @@ class GameInfo extends Component {
   render() {
     // this.getGameGenres(this.state.game);
     const { game } = this.state;
-    return (
+    return this.state.loading ? (
+      "Loading"
+    ) : (
       <div className="gameinfo-main">
         <div className="game-info">
           <div className="gameinfo-title">{game.title}</div>

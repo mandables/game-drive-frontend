@@ -12,18 +12,21 @@ class App extends Component {
     super();
     this.state = {
       username: "",
-      user_id: ""
+      user_id: "",
+      loading: true
     };
   }
 
   componentDidMount() {
-    API.validate().then(data => {
-      if (data.error) {
-        this.signout();
-      } else {
-        this.signin(data);
-      }
-    });
+    API.validate()
+      .then(data => {
+        if (data.error) {
+          this.signout();
+        } else {
+          this.signin(data);
+        }
+      })
+      .then(() => this.setState({ loading: false }));
   }
 
   signin = user => {
@@ -39,7 +42,7 @@ class App extends Component {
   };
 
   render() {
-    return (
+    return this.state.loading ? null : (
       <div className="app-main">
         <Route
           exact

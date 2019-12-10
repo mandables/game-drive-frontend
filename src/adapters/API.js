@@ -24,7 +24,7 @@ class API {
       headers: {
         Authorization: localStorage.getItem("token")
       }
-    }).then(API.jsonify);
+    }).then(this.jsonify);
   }
 
   static post(url, bodyObject) {
@@ -35,7 +35,18 @@ class API {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(bodyObject)
-    }).then(API.jsonify);
+    }).then(this.jsonify);
+  }
+
+  static delete(url, bodyObject) {
+    return fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: localStorage.getItem("token"),
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(bodyObject)
+    });
   }
 
   static jsonify = resp => resp.json();
@@ -44,12 +55,12 @@ class API {
     if (url) {
       return fetch(url, {
         headers: { "User-Agent": "Game Drive" }
-      }).then(API.jsonify);
+      }).then(this.jsonify);
     }
   };
 
   static isGameInUserCollection = (user_id, game_id) => {
-    return API.get(BASE_URL + "in_collection");
+    return this.get(BASE_URL + "in_collection");
   };
   static addGameToUserCollection = (url, user, game) => {
     fetch(URL, {
@@ -63,18 +74,29 @@ class API {
     }).then(() => this.game());
   };
 
+  removeFromUserCollection = (user, game) => {
+    let object = {
+      user_id: user.id,
+      game_id: game.id
+    }
+    this.delete()
+    fetch(URL, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: user.user_id, game_id: game.id })
+    }).then(() => this.game());
+  };
+
   static GameInUserCollection = (user_id, game_id) => {
-    // if (user_id) {
-    debugger;
     let object = {
       user_id,
       rawg_id: game_id
     };
-    console.log(object);
     console.log(BASE_URL + "in_collection");
-    this.post(BASE_URL + "in_collection", object);
-    // }
+    return this.post(BASE_URL + "in_collection", object);
   };
+
+
 }
 
 export default API;
