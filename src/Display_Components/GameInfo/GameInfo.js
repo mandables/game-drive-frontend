@@ -1,52 +1,26 @@
 import React, { Component } from "react";
 import "./GameInfo.css";
 import API from "../../adapters/API";
-import GameReview from "../GameReview/GameReview";
-import { runInThisContext } from "vm";
 
-const URL = "http://localhost:3001/api/v1/user_games";
 const internalAPIURL = process.env.REACT_APP_INTERNAL_API;
-const rawgGameUrl = process.env.REACT_APP_EXTERNAL_API;
-const reviewUrl = "http://localhost:3001/api/v1/reviews";
 
 class GameInfo extends Component {
   state = {
     game: "",
     user_games: [],
-    // played: false,
-    // rating: "",
-    // content: "",
     inCollection: "",
     loading: true
   };
-
-  //fetch game
-
-  game = gameId => {
-    // const gameId = parseInt(this.props.match.params.gameId);
-    return fetch(`${rawgGameUrl}/${gameId}`)
-      .then(resp => resp.json())
-      .then(game => this.setState({ game }));
-    //   .then(() => this.playedGame());
-  };
-
-  //Check if the game is in the user's collection
 
   componentDidMount() {
     const gameId = parseInt(this.props.match.params.gameId);
     API.GameInUserCollection(this.props.user.user_id, gameId).then(boolean =>
       this.setState({ inCollection: boolean })
     );
-    this.game(gameId).then(() => this.setState({ loading: false }));
+    API.fetchGameInfo(gameId).then(game =>
+      this.setState({ loading: false, game })
+    );
   }
-
-  // loadUserAndGameData = () => {
-  //     API.getGames()
-  //         .then(games => {
-  //             this.setState({ user_games: games }, this.playedGame
-  //             )
-  //         })
-  // }
 
   getGameGenres = game => {
     if (game) {
@@ -56,7 +30,6 @@ class GameInfo extends Component {
 
   addGameToUserBackend = (user, gameObject) => {
     let genres = this.getGameGenres(this.state.game);
-    //First add some of the game details to own API if it doesn't already exist
     let gameAndUserObject = {
       title: gameObject.name,
       img_url: gameObject.background_image,
@@ -65,7 +38,6 @@ class GameInfo extends Component {
       user_id: user.user_id,
       game_genres: genres
     };
-    console.log(gameAndUserObject);
     return API.post(`${internalAPIURL}user_games`, gameAndUserObject);
   };
 
@@ -75,16 +47,6 @@ class GameInfo extends Component {
       game_id: game.id
     };
     API.post(`${internalAPIURL}user_games`, object);
-  };
-
-  playedGame = () => {
-    let userIds = this.state.game.users.map(user => user.id);
-    if (userIds.includes(this.props.user.user_id)) {
-      this.setState({ played: true });
-    } else {
-      this.setState({ played: false });
-    }
-    //if the game is in the user_games array return true
   };
 
   renderCollectionButton = () => {
@@ -156,7 +118,6 @@ class GameInfo extends Component {
   // };
 
   render() {
-    // this.getGameGenres(this.state.game);
     const { game } = this.state;
     return this.state.loading ? (
       "Loading"
@@ -174,7 +135,7 @@ class GameInfo extends Component {
                     <input type="checkbox" name="completed" /> */}
           <p>{game.description_raw}</p>
         </div>
-        <div className="write-review"></div>
+        {/* <div className="write-review"></div>
         <strong> Leave a review</strong>
         <br />
         <form>
@@ -200,7 +161,7 @@ class GameInfo extends Component {
           <input type="submit" value="Submit" onClick={this.submitReview} />
         </form>
         <br />
-        {/* {this.renderReviews()} */}
+        {this.renderReviews()} */}
       </div>
     );
   }

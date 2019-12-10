@@ -1,6 +1,7 @@
 const signinURL = "http://localhost:3001/signin";
 const validateURL = "http://localhost:3001/validate";
-const BASE_URL = "http://localhost:3001/api/v1/";
+const BASE_URL = process.env.REACT_APP_INTERNAL_API;
+const rawgGameUrl = process.env.REACT_APP_EXTERNAL_API;
 
 class API {
   static signin(user) {
@@ -24,7 +25,7 @@ class API {
       headers: {
         Authorization: localStorage.getItem("token")
       }
-    }).then(this.jsonify);
+    }).then(this.parseJson);
   }
 
   static post(url, bodyObject) {
@@ -35,7 +36,7 @@ class API {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(bodyObject)
-    }).then(this.jsonify);
+    }).then(this.parseJson);
   }
 
   static delete(url) {
@@ -44,29 +45,18 @@ class API {
     });
   }
 
-  static jsonify = resp => resp.json();
+  static parseJson = resp => resp.json();
 
   static fetchGames = url => {
     if (url) {
       return fetch(url, {
         headers: { "User-Agent": "Game Drive" }
-      }).then(this.jsonify);
+      }).then(this.parseJson);
     }
   };
 
-  static isGameInUserCollection = (user_id, game_id) => {
-    return this.get(BASE_URL + "in_collection");
-  };
-  static addGameToUserCollection = (url, user, game) => {
-    return fetch(URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user_id: user.user_id,
-        game_id: game.id,
-        played: true
-      })
-    });
+  static fetchGameInfo = gameId => {
+    return this.get(`${rawgGameUrl}/${gameId}`);
   };
 
   static removeFromUserCollection = (user, game) => {
@@ -78,8 +68,11 @@ class API {
       user_id,
       rawg_id: game_id
     };
-    console.log(BASE_URL + "in_collection");
     return this.post(BASE_URL + "in_collection", object);
+  };
+
+  static search = searchTerm => {
+    return this.fetchGames(rawgGameUrl + "?search=" + searchTerm);
   };
 }
 
