@@ -62,16 +62,10 @@ class GameList extends Component {
 
         <div id="allgames-container">{this.allGameCards()}</div>
         <div id="pages">
-          <button
-            onClick={() => this.changePage(this.state.previousPage)}
-            id="previous"
-          >
+          <button onClick={() => this.changePage(previousPage)} id="previous">
             Previous
           </button>
-          <button
-            onClick={() => this.changePage(this.state.nextPage)}
-            id="next"
-          >
+          <button onClick={() => this.changePage(nextPage)} id="next">
             Next
           </button>
         </div>

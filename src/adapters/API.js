@@ -74,6 +74,10 @@ class API {
   static search = searchTerm => {
     return this.fetchGames(rawgGameUrl + "?search=" + searchTerm);
   };
+
+  static getUserGames = userId => {
+    return this.get(BASE_URL + "users/" + userId);
+  };
 }
 
 export default API;
