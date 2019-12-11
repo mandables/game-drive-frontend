@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import "./UserPage.css";
-import GameCard from "../../Display_Components/GameCard/GameCard";
 import UserGameCollection from "../../Display_Components/UserGameCollection/UserGameCollection";
-import Sidebar from "../../Display_Components/Sidebar/Sidebar";
-
-const url = "http://localhost:3001/api/v1/users";
+import API from "../../adapters/API";
 
 class UserPage extends Component {
   state = {
@@ -12,20 +9,23 @@ class UserPage extends Component {
   };
 
   //fetch user's games
-  fetchUserGames = () => {
-    let id = parseInt(this.props.match.params.gamerId);
-    fetch(`${url}/${id}`)
-      .then(resp => resp.json())
-      .then(array => this.setState({ userGames: array.games }));
-  };
+  //   fetchUserGames = () => {
+  //     fetch(`${url}/${id}`)
+  //       .then(resp => resp.json())
+  //       .then(array => this.setState({ userGames: array.games }));
+  //   };
 
-  // componentDidMount() {
-  //     this.fetchUserGames()
-  // }
+  componentDidMount() {
+    let userId = parseInt(this.props.match.params.gamerId);
+    API.getUserGames(userId).then(userData =>
+      this.setState({ userGames: userData.games })
+    );
+  }
 
-  userGames = () => {
-    this.fetchUserGames();
-    return this.state.userGames.map(game => <UserGameCollection game={game} />);
+  renderUserGames = () => {
+    return this.state.userGames.map(game => (
+      <UserGameCollection key={game.id} game={game} />
+    ));
   };
 
   render() {
@@ -33,7 +33,7 @@ class UserPage extends Component {
       <div className="user-main">
         <h1>{this.props.user.username}</h1>
         <hr className="user-line" />
-        <div className="user-games">{this.userGames }</div>
+        <div className="user-games">{this.renderUserGames()}</div>
       </div>
     );
   }

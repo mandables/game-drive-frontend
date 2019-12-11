@@ -1,13 +1,13 @@
 a > img {
-    margin-right: 10px;
-    margin-bottom: 0.5em;
-    width: 150px;
-    height: 200px;
+  margin-right: 10px;
+  margin-bottom: 0.5em;
+  width: 250px;
+  height: 200px;
 }
 
 /* .collection-main {
     /* margin-left: 200px; */
-    /* position: absolute;
+/* position: absolute;
     left: 10%;
     display: grid;
     grid-template-columns: 40px 50px auto 50px 40px;
