@@ -9,9 +9,10 @@
 .user-main {
   padding-left: 300px;
   color: whitesmoke;
-  height: 100vh;
+  height: 99.9vh;
   background-image: url("../../images/UserPage.jpg");
-  background-size: 100%;
+  background-size: cover;
+  padding-top: 0.5px;
 }
 
 .user-line {
