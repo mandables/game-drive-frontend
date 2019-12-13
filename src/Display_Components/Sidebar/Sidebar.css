@@ -1,21 +1,26 @@
 .sidebar {
-height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 250px; /* Set the width of the sidebar */
+  display: flex;
+  justify-content: space-evenly;
+  height: 5%; /* Full-height: remove this if you want "auto" height */
+  width: 100%; /* Set the width of the sidebar */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
-  left: 0;
+  /* top: 0; /* Stay at the top */
+  /* left: 0; */
   background-color: #6f2232;
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px;
   color: white;
   /* text-align: center; */
-  padding-left: 5px;
-  border-right: solid 1px;
-
+  /* padding-left: 5px; */
 }
 
-a {
+nav {
+  align-items: center;
+}
+
+.nav-link {
+  padding-left: 30px;
   color: white;
   text-decoration: none;
 }
@@ -37,14 +42,17 @@ a {
   margin: 20px;
 }
 
-.my-games:hover,.signout:hover,.all-games:hover {
+.my-games:hover,
+.signout:hover,
+.all-games:hover {
   background-color: #950740;
 }
 
-.my-games:active,.signout:active,.all-games:active {
+.my-games:active,
+.signout:active,
+.all-games:active {
   background-color: #950740;
 }
-
 
 #my-games-text {
   padding-left: 10px;
@@ -54,17 +62,12 @@ a {
   /* text-align: center; */
   /* padding: 40px; */
   display: inline-flex;
-  
 }
-
 
 #all-games-text {
   padding-left: 10px;
   position: relative;
 }
-
-
-
 
 /* <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 		    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 		    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div> */
 /* 
